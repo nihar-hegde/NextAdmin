@@ -12,16 +12,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { userSignInSchema } from "@/lib/validators/signinValidators";
+import { userSignUpSchema } from "@/lib/validators/signinValidators";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import Link from "next/link";
 
-const SignInForm = () => {
-  const form = useForm<z.infer<typeof userSignInSchema>>({
-    resolver: zodResolver(userSignInSchema),
+const SignUpForm = () => {
+  const form = useForm<z.infer<typeof userSignUpSchema>>({
+    resolver: zodResolver(userSignUpSchema),
   });
-  function onSubmit(data: z.infer<typeof userSignInSchema>) {
+  function onSubmit(data: z.infer<typeof userSignUpSchema>) {
     console.log(data);
   }
 
@@ -29,6 +29,20 @@ const SignInForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
         <div className="space-y-2">
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Username</FormLabel>
+                <FormControl>
+                  <Input placeholder="Username" {...field} />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="email"
@@ -57,9 +71,27 @@ const SignInForm = () => {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Confirm Password</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Re Enter Password"
+                    type="password"
+                    {...field}
+                  />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
         <Button className="w-full mt-7" type="submit">
-          Sign In
+          Sign Up
         </Button>
       </form>
       <div
@@ -71,13 +103,13 @@ const SignInForm = () => {
         or
       </div>
       <p className="text-center text-sm text-gray-600 mt-2">
-        If you don&apos;t have an account, Please&nbsp;
+        If you already have an account, Please&nbsp;
         <Link href={"/signup"} className="text-blue-500 hover:underline">
-          Sign Up
+          Sign In
         </Link>
       </p>
     </Form>
   );
 };
 
-export default SignInForm;
+export default SignUpForm;
