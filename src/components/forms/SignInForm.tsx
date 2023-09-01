@@ -16,13 +16,28 @@ import { userSignInSchema } from "@/lib/validators/signinValidators";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import {signIn} from 'next-auth/react'
+import { useRouter } from "next/navigation";
+
+
 
 const SignInForm = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof userSignInSchema>>({
     resolver: zodResolver(userSignInSchema),
   });
-  function onSubmit(data: z.infer<typeof userSignInSchema>) {
+  async function onSubmit(data: z.infer<typeof userSignInSchema>) {
     console.log(data);
+    const result = await signIn('credentials',{
+      email:data.email,
+      password:data.password,
+      redirect:false,      
+    });
+    if(result?.error){
+      console.log(result.error);
+    }else{
+      router.push('/dashboard')
+    }
   }
 
   return (
