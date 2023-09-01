@@ -1,8 +1,9 @@
+import AddProductCard from '@/components/cards/AddProductCard'
 import React from 'react'
 
 const ProductPage = () => {
   return (
-    <div>ProductPage</div>
+    <div><AddProductCard/></div>
   )
 }
 
