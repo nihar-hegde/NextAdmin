@@ -16,13 +16,30 @@ import { userSignUpSchema } from "@/lib/validators/signinValidators";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import axios from 'axios';
+import { useRouter } from "next/navigation";
 
 const SignUpForm = () => {
+  const router = useRouter();
   const form = useForm<z.infer<typeof userSignUpSchema>>({
     resolver: zodResolver(userSignUpSchema),
   });
-  function onSubmit(data: z.infer<typeof userSignUpSchema>) {
+  async function onSubmit(data: z.infer<typeof userSignUpSchema>) {
     console.log(data);
+    try {
+      const userData = {
+        username:data.username,
+        email: data.email,
+        password: data.password,
+        
+      };
+      console.log("send data", userData);
+      const response = await axios.post("/api/auth/signup", userData);
+      console.log("sign up success: ", response.data);
+      router.push("/signin");
+    } catch (error: any) {
+      console.log("Error while signing up", error.message);
+    }
   }
 
   return (
