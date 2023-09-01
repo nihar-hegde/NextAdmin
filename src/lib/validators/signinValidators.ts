@@ -21,3 +21,11 @@ export const userSignUpSchema = z.object({
   path:['confirmPassword'],
   message: 'Password does not match'
 })
+export const userSignUpBackenSchema = z.object({
+  username:z.string().min(1,{message:"Username is required!"}).max(35,{message:"max characters is 35"}),
+  email: z.string().min(1, {
+    message: "E-mail is required.",
+  }).email('Invalid Email'),
+  password:z.string().min(1,{message:"Password is required"}).min(6,{message:"Minimum 6 characters required!"})
+  .max(30,{message:"Max 30 characters"}),
+  })
