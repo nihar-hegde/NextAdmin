@@ -32,7 +32,7 @@ const AddProudctForm = () => {
           const productData = {
             title: data.title,
             description: data.description,
-            price:data.price,
+            price:data.price
           };
           console.log("send data", productData);
           const response = await axios.post("/api/products", productData);
