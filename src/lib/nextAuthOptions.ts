@@ -2,7 +2,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import clientPromise from "./mongodb";
-import { AuthOptions } from "next-auth";
+import { AuthOptions, getServerSession } from "next-auth";
 
 export const nextauthOptions: AuthOptions = {
   // Configure one or more authentication providers
@@ -55,3 +55,7 @@ export const nextauthOptions: AuthOptions = {
     signIn:"/signin"
   }
 };
+
+export const getAuthSession = () => {
+  return getServerSession(nextauthOptions);
+}
